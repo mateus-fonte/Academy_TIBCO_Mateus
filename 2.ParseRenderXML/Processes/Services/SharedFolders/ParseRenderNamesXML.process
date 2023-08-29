@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/2.ParseRenderXML/Resources/Schemas/Models/Names" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/Resources/Schemas/Models/Names.xsd" xmlns:pfx4="http://www.tibco.com/schemas/2.ParseRenderXML/Resources/Schemas/Services/ParseRenderNamesXMLRequest" xmlns:pfx5="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Services/ParseRenderNamesXMLResponse" xmlns:ns2="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Commons/Response" xmlns:ns1="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Commons/Header">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/2.ParseRenderXML/Resources/Schemas/Models/Names" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/Resources/Schemas/Models/Names.xsd" xmlns:pfx4="http://www.tibco.com/schemas/2.ParseRenderXML/Resources/Schemas/Services/ParseRenderNamesXMLRequest" xmlns:pfx5="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Services/ParseRenderNamesXMLResponse" xmlns:ns0="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns2="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Commons/Response" xmlns:ns1="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Commons/Header">
     <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/ns/no_namespace_schema_location/Resources/Schemas/Models/Names.xsd" schemaLocation="/Resources/Schemas/Models/Names.xsd"/>
     <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/2.ParseRenderXML/Resources/Schemas/Services/ParseRenderNamesXMLRequest" schemaLocation="/Resources/Schemas/Services/ParseRenderNamesXMLRequest.xsd"/>
     <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/0.ProjectZero/Resources/Schemas/Services/ParseRenderNamesXMLResponse" schemaLocation="/Resources/Schemas/Services/ParseRenderNamesXMLResponse.xsd"/>
@@ -73,9 +73,10 @@
         <pd:y>6</pd:y>
         <pd:width>376</pd:width>
         <pd:height>152</pd:height>
-        <pd:collapsedWidth>52</pd:collapsedWidth>
-        <pd:collapsedHeight>69</pd:collapsedHeight>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
         <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
         <config>
             <pd:groupType>inputLoop</pd:groupType>
             <pd:serializable>false</pd:serializable>
@@ -112,12 +113,12 @@
             <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
             <pd:resourceType>ae.activities.log</pd:resourceType>
             <pd:x>451</pd:x>
-            <pd:y>86</pd:y>
+            <pd:y>85</pd:y>
             <config>
                 <role>User</role>
             </config>
             <pd:inputBindings>
-                <ns0:ActivityInput xmlns:ns0="http://www.tibco.com/pe/WriteToLogActivitySchema">
+                <ns0:ActivityInput>
                     <message>
                         <xsl:value-of select="$currentName/Name"/>
                     </message>
