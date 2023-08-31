@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/schemas/3.Files/Resources/Schemas/Models/Users" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://www.tibco.com/schemas/3.Files/Resources/Schemas/Models/Users" schemaLocation="/Resources/Schemas/Models/Users.xsd"/>
+    <pd:name>Processes/Services/SharedFolders/CreateCSVFiles.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>99</pd:startX>
+    <pd:startY>175</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1117</pd:endX>
+    <pd:endY>170</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1693489114277</pd:targetNamespace>
+    <pd:activity name="Create CSV File with Header">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>425</pd:x>
+        <pd:y>182</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+        </config>
+        <pd:inputBindings>
+            <pfx:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="'C:\Users\MateusFonte\OneDrive - Universidade de Aveiro\Documents\Lynxmind\TIBCO_Udemy_Course\Academy_TIBCO_Mateus\Files\input\users2.csv'"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="$Create-Header-Data/Text"/>
+                </textContent>
+            </pfx:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Header Data">
+        <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+        <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+        <pd:x>252</pd:x>
+        <pd:y>175</pd:y>
+        <config>
+            <ParseSharedConfig>/Resources/CSV/Data Format.sharedparse</ParseSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <Rows>
+                <ns:Users>
+                    <ns:userID>
+                        <xsl:value-of select="concat('&quot;','userID','&quot;' )"/>
+                    </ns:userID>
+                    <ns:firstName>
+                        <xsl:value-of select="concat('&quot;','firstName','&quot;' )"/>
+                    </ns:firstName>
+                    <ns:lastName>
+                        <xsl:value-of select="concat('&quot;','lastName','&quot;' )"/>
+                    </ns:lastName>
+                    <ns:nationality>
+                        <xsl:value-of select="concat('&quot;','nationality','&quot;' )"/>
+                    </ns:nationality>
+                    <ns:department>
+                        <xsl:value-of select="concat('&quot;','department','&quot;' )"/>
+                    </ns:department>
+                </ns:Users>
+            </Rows>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Sample Users Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>590</pd:x>
+        <pd:y>175</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="ns:Users" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns:Users>
+                    <ns:userID>
+                        <xsl:value-of select="'1'"/>
+                    </ns:userID>
+                    <ns:firstName>
+                        <xsl:value-of select="'Mateus'"/>
+                    </ns:firstName>
+                    <ns:lastName>
+                        <xsl:value-of select="'da Fonte'"/>
+                    </ns:lastName>
+                    <ns:nationality>
+                        <xsl:value-of select="'brasileiro'"/>
+                    </ns:nationality>
+                    <ns:department>
+                        <xsl:value-of select="'development'"/>
+                    </ns:department>
+                </ns:Users>
+                <ns:Users>
+                    <ns:userID>
+                        <xsl:value-of select="'2'"/>
+                    </ns:userID>
+                    <ns:firstName>
+                        <xsl:value-of select="'Luiza'"/>
+                    </ns:firstName>
+                    <ns:lastName>
+                        <xsl:value-of select="'Lacerda'"/>
+                    </ns:lastName>
+                    <ns:nationality>
+                        <xsl:value-of select="'brasileira'"/>
+                    </ns:nationality>
+                    <ns:department>
+                        <xsl:value-of select="'HR'"/>
+                    </ns:department>
+                </ns:Users>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>696</pd:x>
+        <pd:y>98</pd:y>
+        <pd:width>379</pd:width>
+        <pd:height>198</pd:height>
+        <pd:collapsedWidth>52</pd:collapsedWidth>
+        <pd:collapsedHeight>69</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Sample-Users-Data/root/ns:Users</pd:over>
+            <pd:iterationElementSlot>currentRow</pd:iterationElementSlot>
+            <pd:indexSlot>index</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Render current Row User Data</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Append Rows to CSV File</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render current Row User Data</pd:from>
+            <pd:to>Append Rows to CSV File</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Render current Row User Data">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>799</pd:x>
+            <pd:y>194</pd:y>
+            <config>
+                <ParseSharedConfig>/Resources/CSV/Data Format.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <ns:Users>
+                        <ns:userID>
+                            <xsl:value-of select="$currentRow/ns:Users/ns:userID"/>
+                        </ns:userID>
+                        <ns:firstName>
+                            <xsl:value-of select="$currentRow/ns:Users/ns:firstName"/>
+                        </ns:firstName>
+                        <ns:lastName>
+                            <xsl:value-of select="$currentRow/ns:Users/ns:lastName"/>
+                        </ns:lastName>
+                        <ns:nationality>
+                            <xsl:value-of select="$currentRow/ns:Users/ns:nationality"/>
+                        </ns:nationality>
+                        <ns:department>
+                            <xsl:value-of select="$currentRow/ns:Users/ns:department"/>
+                        </ns:department>
+                    </ns:Users>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Append Rows to CSV File">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>940</pd:x>
+            <pd:y>189</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+            </config>
+            <pd:inputBindings>
+                <pfx:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="'C:\Users\MateusFonte\OneDrive - Universidade de Aveiro\Documents\Lynxmind\TIBCO_Udemy_Course\Academy_TIBCO_Mateus\Files\input\users2.csv'"/>
+                    </fileName>
+                    <textContent>
+                        <xsl:value-of select="$Render-current-Row-User-Data/Text"/>
+                    </textContent>
+                </pfx:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Create Header Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Header Data</pd:from>
+        <pd:to>Create CSV File with Header</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create CSV File with Header</pd:from>
+        <pd:to>Sample Users Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Sample Users Data</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
